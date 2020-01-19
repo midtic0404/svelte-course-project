@@ -19,7 +19,8 @@
             description: 'Experts helps you!',
             imageUrl: 'https://www.codingdojo.com/blog/wp-content/uploads/coding-bootcamps-vs-cs-degrees.png',
             address: '234 Rd',
-            contactEmail: 'test@code.com'
+            contactEmail: 'test@code.com',
+            isFavorite: false
         },
         {
             id: 'm2',
@@ -28,7 +29,8 @@
             description: 'Experts helps you!',
             imageUrl: 'https://www.gotokyo.org/en/spot/1030/images/1030_0840_2_750x503.jpg',
             address: '234 Rd',
-            contactEmail: 'swimfun@test.com'
+            contactEmail: 'swimfun@test.com',
+            isFavorite: false
         },
     ];
 
@@ -46,6 +48,15 @@
         meetups = [newMeetup, ...meetups];
     }
 
+    function toggleFavorite(event) {
+        const id = event.detail;
+        const updatedMeetup = {...meetups.find(m => m.id === id)};
+        updatedMeetup.isFavorite = !updatedMeetup.isFavorite;
+        const meetupIndex = meetups.findIndex(m => m.id === id);
+        const updatedMeetups = [...meetups];
+        updatedMeetups[meetupIndex] = updatedMeetup;
+        meetups = updatedMeetups;
+    }
 </script>
 
 <style>
@@ -67,25 +78,21 @@
             id="title"
             label="Title"
             value={title}
-            type="text"
             on:input={event => (title = event.target.value)} />
         <TextInput 
             id="subtitle"
             label="Subtitle"
             value={subtitle}
-            type="text"
             on:input={event => (subtitle = event.target.value)} />
         <TextInput 
             id="address"
             label="Address"
             value={address}
-            type="text"
             on:input={event => (address = event.target.value)} />
         <TextInput 
             id="imageUrl"
             label="Image URL"
             value={imageUrl}
-            type="text"
             on:input={event => (imageUrl = event.target.value)} />
         <TextInput 
             id="email"
@@ -101,5 +108,5 @@
             on:input={event => (description = event.target.value)} />
         <Button type="submit" caption="Save" />
     </form>
-    <MeetupGrid {meetups} />
+    <MeetupGrid {meetups} on:toggle-favorite="{toggleFavorite}" />
 </main>
