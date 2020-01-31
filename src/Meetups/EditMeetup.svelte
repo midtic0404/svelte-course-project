@@ -22,15 +22,13 @@
             title = selectedMeetup.title;
             subtitle = selectedMeetup.subtitle;
             address = selectedMeetup.address;
-            email = selectedMeetup.email;
+            email = selectedMeetup.contactEmail;
             description = selectedMeetup.description;
             imageUrl = selectedMeetup.imageUrl;
         });
 
         unsubscribe();
     }
-
-    
 
     $: titleValid = !isEmpty(title);
     $: subtitleValid = !isEmpty(subtitle);
