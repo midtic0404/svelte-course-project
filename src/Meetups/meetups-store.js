@@ -44,6 +44,13 @@ const customMeetupsStore = {
             return updatedMeetups;
         })
     },
+    removeMeetup: (id) => {
+        meetups.update(items => {
+            return items.filter(item => {
+                return item.id !== id;
+            });
+        });
+    },
     toggleFavorite: (id) => {
         meetups.update(items => {
             const updatedMeetup = {...items.find(m => m.id === id)};
