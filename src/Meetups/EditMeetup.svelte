@@ -61,7 +61,26 @@
         if(id){
             meetups.updateMeetup(id, meetupData);
         }else {
-            meetups.addMeetup(meetupData);
+            fetch('https://svelte-course-chacha.firebaseio.com/meetups.json', {
+                method: 'POST',
+                body: JSON.stringify({...meetupData, isFavorite: false}),
+                headers: {'Content-Type': 'application/json'}
+            })
+            .then(res => {
+                if(!res.ok){
+                    throw new Error('An error occurred');
+                }
+
+                return res.json();
+            })
+            .then(data => {
+                meetups.addMeetup({...meetupData, isFavorite: false, id: data.name});
+            })
+            .catch(error => {
+                console.log(error);
+                
+            })
+            
         }
         dispatch('save');
     }
