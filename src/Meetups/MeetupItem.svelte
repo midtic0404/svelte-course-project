@@ -2,6 +2,7 @@
     import meetups from './meetups-store.js';
     import Button from '../UI/Button.svelte';
     import Badge from '../UI/Badge.svelte';
+
     import { createEventDispatcher } from "svelte";
 
     export let id;
@@ -79,7 +80,7 @@
 </style>
 
 
-<article>
+<article >
     <header>
         <h1>
           {title}
