@@ -7,6 +7,7 @@
     import TextInput from "./UI/TextInput.svelte";
     import meetups from "./Meetups/meetups-store.js";
     import LoadingSpinner from "./UI/LoadingSpinner.svelte";
+    import Error from "./UI/Error.svelte";
 
     
 
@@ -15,6 +16,7 @@
     let page = 'overview';
     let pageData = {};
     let isLoading = true;
+    let error;
 
     fetch('https://svelte-course-chacha.firebaseio.com/meetups.json')
     .then(res => {
@@ -37,6 +39,7 @@
         }, 1000);
     })
     .catch(err => {
+        error = err;
         isLoading = false;
         console.log(err);
         
@@ -67,6 +70,10 @@
         editedId = event.detail;
     }
 
+    function clearError() {
+        error = null;
+    }
+
     
 </script>
 
@@ -77,6 +84,11 @@
 
 
 </style>
+
+
+{#if error}
+     <Error message="{error.message}" on:cancel="{clearError}"/>
+{/if}
 
 <Header />
 <main>
